@@ -15,23 +15,23 @@ database = firebase.database();
 
 var latInput = 0;
 var longInput = 0;
+var mainMap;
+
 
 function initMap() {
 
   var philly = { lat: 39.953, lng: -75.165 };
 
-  var map = new google.maps.Map(
+  mainMap = new google.maps.Map(
     document.getElementById('main-map'), { zoom: 13, center: philly });
   var map2 = new google.maps.Map(
     document.getElementById('map-input'), { zoom: 14, center: philly });
 
-  var contentString = "<p>Test</p>"
 
-  var infowindow = new google.maps.InfoWindow({
-    content: contentString
-  });
 
- 
+
+
+
   var placemarker;
   var markerPlaced = false;
 
@@ -90,23 +90,47 @@ $(document).ready(function () {
     $('#description-input').val("")
   });
 
-  database.ref().on("value", function (snapshot) {
+  database.ref().on("child_added", function (childSnapshot) {
+    var childData = childSnapshot.val();
+    var testLat = childData.position.lat;
+    var testLong = childData.position.long;
+    var testposition = { lat: testLat, lng: testLong };
+    var musicianName = childData.name;
+    var musicianEmail = childData.email;
+    var musicianInstrument = childData.instrument;
+    var musicianExp = childData.experience;
+    var musicianYT = childData.youtube;
+    var musicianDescription = childData.description;
 
-
-    // Create main-map markers here
-
-    snapshot.forEach(function (childSnapshot) {
-      var childData = childSnapshot.val();
-      var testLat = childData.position.lat;
-      var testLong = childData.position.long;
-      var testposition = { lat: testLat, lng: testLong };
-      console.log(testposition);
-      // var marker = new google.maps.Marker({
-      //   position: testposition,
-      //   map: map,
-      // });
-
+    var marker = new google.maps.Marker({
+      position: testposition,
+      map: mainMap,
+      animation: google.maps.Animation.DROP,
     });
+    // var $musicianProfile = $("<div class = \"info-window\">");
+    // $musicianProfile.append(
+    //   $("<p>").text(childData.name)
+    // )
+    var contentString =
+      '<div class="info-window">' +
+        '<p class="name">' + musicianName + '</p>' +
+        '<p>Email: ' + musicianEmail + '</p>' +
+        '<p>Instrument: ' + musicianInstrument + '</p>' +
+        '<p>Experience: ' + musicianExp + '</p>' +
+        '<p>Description: ' + musicianDescription + '</p>' +
+      '</div>';
+
+
+    var infowindow = new google.maps.InfoWindow({
+      content: contentString,
+      
+    });
+    console.log(musicianName);
+
+    marker.addListener('click', function () {
+      infowindow.open(mainMap, marker);
+    });
+
 
 
 

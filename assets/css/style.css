@@ -22,3 +22,16 @@
 .musician-form textarea {
   min-height: 100px;
 }
+
+.info-window{
+  height: 100%;
+  width: 200px;
+}
+.info-window p{
+  font-weight: bold;
+}
+.name{
+  font-weight: 400;
+  font-size: 20px;
+}
+
