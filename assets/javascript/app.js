@@ -31,18 +31,7 @@ function initMap() {
     content: contentString
   });
 
-  var marker = new google.maps.Marker({
-    position: philly,
-    map: map,
-  });
-  var marker2 = new google.maps.Marker({
-    position: { lat: 39.983, lng: -75.165 },
-    map: map,
-  });
-  marker2.addListener('click', function () {
-    infowindow.open(map2, marker2);
-  });
-
+ 
   var placemarker;
   var markerPlaced = false;
 
@@ -54,7 +43,7 @@ function initMap() {
         position: location,
         map: map2
       });
-     }
+    }
 
     latInput = placemarker.getPosition().lat();
     longInput = placemarker.getPosition().lng();
@@ -67,8 +56,8 @@ function initMap() {
   });
 }
 
-$(document).ready(function() {
-  $("#submit-btn").on("click", function(event) {
+$(document).ready(function () {
+  $("#submit-btn").on("click", function (event) {
     event.preventDefault();
 
     var name = $('#name-input').val().trim();
@@ -101,14 +90,29 @@ $(document).ready(function() {
     $('#description-input').val("")
   });
 
-  database.ref().on("child_added", function(snapshot) {
+  database.ref().on("value", function (snapshot) {
+
+
     // Create main-map markers here
 
+    snapshot.forEach(function (childSnapshot) {
+      var childData = childSnapshot.val();
+      var testLat = childData.position.lat;
+      var testLong = childData.position.long;
+      var testposition = { lat: testLat, lng: testLong };
+      console.log(testposition);
+      // var marker = new google.maps.Marker({
+      //   position: testposition,
+      //   map: map,
+      // });
 
-    
+    });
+
+
+
   });
 
-    
+
 
 
 });
