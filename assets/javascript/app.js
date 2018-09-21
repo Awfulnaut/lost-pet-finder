@@ -55,6 +55,12 @@ $(document).ready(function () {
   console.log("markerPlaced = " + markerPlaced);
 
   $("#submit-btn").on("click", function (event) {
+
+    // if no marker was placed, prevent form submission
+    if (!markerPlaced) {
+      event.preventDefault();
+    }
+
     var name;
     var email;
     var instrument;
