@@ -10,13 +10,12 @@ var config = {
 };
 
 firebase.initializeApp(config);
-
 database = firebase.database();
 
 var latInput = 0;
 var longInput = 0;
 var mainMap;
-
+var markerPlaced = false;
 
 function initMap() {
 
@@ -24,16 +23,10 @@ function initMap() {
 
   mainMap = new google.maps.Map(
     document.getElementById('main-map'), { zoom: 13, center: philly });
-  var map2 = new google.maps.Map(
+  var inputMap = new google.maps.Map(
     document.getElementById('map-input'), { zoom: 14, center: philly });
 
-
-
-
-
-
   var placemarker;
-  var markerPlaced = false;
 
   function placeMarker(location) {
     if (placemarker) {
@@ -41,24 +34,26 @@ function initMap() {
     } else {
       placemarker = new google.maps.Marker({
         position: location,
-        map: map2
+        map: inputMap
       });
     }
 
     latInput = placemarker.getPosition().lat();
     longInput = placemarker.getPosition().lng();
-    console.log("Latitude: " + latInput + " | Longitute: " + longInput)
   }
 
 
-  google.maps.event.addListener(map2, 'click', function (event) {
+  google.maps.event.addListener(inputMap, 'click', function (event) {
     placeMarker(event.latLng);
   });
 }
 
 $(document).ready(function () {
+  $('#input-map').on('click', function() {
+    markerPlaced = true;
+  })
+
   $("#submit-btn").on("click", function (event) {
-    event.preventDefault();
 
     var name = $('#name-input').val().trim();
     var email = $('#email-input').val().trim();
@@ -81,20 +76,13 @@ $(document).ready(function () {
     }
 
     database.ref().push(newMusician);
-
-    $('#name-input').val("")
-    $('#email-input').val("")
-    $('#instrument-input').val("")
-    $('#experience-input').val("")
-    $('#youtube-input').val("")
-    $('#description-input').val("")
   });
 
   database.ref().on("child_added", function (childSnapshot) {
     var childData = childSnapshot.val();
-    var testLat = childData.position.lat;
-    var testLong = childData.position.long;
-    var testposition = { lat: testLat, lng: testLong };
+    var positionLat = childData.position.lat;
+    var positionLong = childData.position.long;
+    var musicianPosition = { lat: positionLat, lng: positionLong };
     var musicianName = childData.name;
     var musicianEmail = childData.email;
     var musicianInstrument = childData.instrument;
@@ -103,40 +91,28 @@ $(document).ready(function () {
     var musicianDescription = childData.description;
 
     var marker = new google.maps.Marker({
-      position: testposition,
+      position: musicianPosition,
       map: mainMap,
       animation: google.maps.Animation.DROP,
     });
-    // var $musicianProfile = $("<div class = \"info-window\">");
-    // $musicianProfile.append(
-    //   $("<p>").text(childData.name)
-    // )
+
     var contentString =
       '<div class="info-window">' +
         '<p class="name">' + musicianName + '</p>' +
         '<p>Email: ' + musicianEmail + '</p>' +
         '<p>Instrument: ' + musicianInstrument + '</p>' +
-        '<p>Experience: ' + musicianExp + '</p>' +
+        '<p>Experience: ' + musicianExp + ' years</p>' +
         '<p>Description: ' + musicianDescription + '</p>' +
       '</div>';
 
-
     var infowindow = new google.maps.InfoWindow({
       content: contentString,
-      
     });
-    console.log(musicianName);
 
     marker.addListener('click', function () {
       infowindow.open(mainMap, marker);
     });
 
-
-
-
+    markerPlaced = false;
   });
-
-
-
-
 });
