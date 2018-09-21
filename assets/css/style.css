@@ -27,11 +27,28 @@
   height: 100%;
   width: 200px;
 }
-.info-window p{
-  font-weight: bold;
-}
+
 .name{
   font-weight: 400;
   font-size: 20px;
 }
 
+.animated {
+  animation-duration: 3s;
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
+}
+
+@keyframes pulse {
+  0% {transform: scale(1);}
+  50% {transform: scale(1.1);}
+  100% {transform: scale(1);}
+}
+
+#error {
+  animation-name: pulse;
+  animation-duration: 1s;
+  text-align: center;
+  color: red;
+  margin-top: 10px;
+}

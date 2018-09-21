@@ -1,5 +1,3 @@
-// Google maps API key: AIzaSyC6GnZhTZ8RV_-JINWYAo0e2KDJQQoz7h0
-
 var config = {
   apiKey: "AIzaSyDDqeSFBecW0z7ho68WE5ZwcTusl6hVits",
   authDomain: "musician-finder-f0e28.firebaseapp.com",
@@ -16,9 +14,9 @@ var latInput = 0;
 var longInput = 0;
 var mainMap;
 var markerPlaced = false;
+var formCompleted = false;
 
 function initMap() {
-
   var philly = { lat: 39.953, lng: -75.165 };
 
   mainMap = new google.maps.Map(
@@ -26,60 +24,84 @@ function initMap() {
   var inputMap = new google.maps.Map(
     document.getElementById('map-input'), { zoom: 14, center: philly });
 
-  var placemarker;
+  var newMarker;
 
   function placeMarker(location) {
-    if (placemarker) {
-      placemarker.setPosition(location);
+    if (newMarker) {
+      newMarker.setPosition(location);
     } else {
-      placemarker = new google.maps.Marker({
+      newMarker = new google.maps.Marker({
         position: location,
         map: inputMap
       });
     }
 
-    latInput = placemarker.getPosition().lat();
-    longInput = placemarker.getPosition().lng();
+    latInput = newMarker.getPosition().lat();
+    longInput = newMarker.getPosition().lng();
+    console.log("newMarker position: " + newMarker.getPosition())
   }
 
-
+  // Listen for clicks on the input map that will place a marker
   google.maps.event.addListener(inputMap, 'click', function (event) {
     placeMarker(event.latLng);
+
+    // Update markerPlaced boolean to validate against on submit
+    markerPlaced = true;
+    console.log("markerPlaced = " + markerPlaced);
   });
 }
 
 $(document).ready(function () {
-  $('#input-map').on('click', function() {
-    markerPlaced = true;
-  })
+  console.log("markerPlaced = " + markerPlaced);
 
   $("#submit-btn").on("click", function (event) {
+    var name;
+    var email;
+    var instrument;
+    var experience;
+    var youtube;
+    var description;
 
-    var name = $('#name-input').val().trim();
-    var email = $('#email-input').val().trim();
-    var instrument = $('#instrument-input').val().trim();
-    var experience = $('#experience-input').val().trim();
-    var youtube = $('#youtube-input').val().trim();
-    var description = $('#description-input').val().trim();
+    function checkFormCompletion() {
+      name = $('#name-input').val().trim();
+      email = $('#email-input').val().trim();
+      instrument = $('#instrument-input').val().trim();
+      experience = $('#experience-input').val().trim();
+      youtube = $('#youtube-input').val().trim();
+      description = $('#description-input').val().trim();
 
-    var newMusician = {
-      name: name,
-      email: email,
-      instrument: instrument,
-      experience: experience,
-      youtube: youtube,
-      description: description,
-      position: {
-        lat: latInput,
-        long: longInput
+      //TODO: once youtube is implemented, add a check for its value here
+      if (name != "" && email != "" && instrument != "" && experience != "" && youtube != "" && description != "") {
+        formCompleted = true;
       }
     }
 
-    database.ref().push(newMusician);
+    checkFormCompletion();
+
+    // If an input marker has been placed AND the form is completed, add the data to firebase
+    if (markerPlaced && formCompleted) {
+
+      var newMusician = {
+        name: name,
+        email: email,
+        instrument: instrument,
+        experience: experience,
+        youtube: youtube,
+        description: description,
+        position: {
+          lat: latInput,
+          long: longInput
+        }
+      }
+
+      database.ref().push(newMusician);
+    } else {
+      $('#error').removeClass("d-none");
+    }
   });
 
-  database.ref().on("child_added", function (childSnapshot) {
-    var childData = childSnapshot.val();
+  database.ref().on("child_added", function (snapshot) {
+    var childData = snapshot.val();
     var positionLat = childData.position.lat;
     var positionLong = childData.position.long;
     var musicianPosition = { lat: positionLat, lng: positionLong };
@@ -99,18 +121,18 @@ $(document).ready(function () {
     var contentString =
       '<div class="info-window">' +
         '<p class="name">' + musicianName + '</p>' +
-        '<p>Email: ' + musicianEmail + '</p>' +
-        '<p>Instrument: ' + musicianInstrument + '</p>' +
-        '<p>Experience: ' + musicianExp + ' years</p>' +
-        '<p>Description: ' + musicianDescription + '</p>' +
+        '<p><strong>Email: </strong>' + musicianEmail + '</p>' +
+        '<p><strong>Instrument: </strong>' + musicianInstrument + '</p>' +
+        '<p><strong>Experience: </strong>' + musicianExp + ' years</p>' +
+        '<p><strong>Description: </strong><br />' + musicianDescription + '</p>' +
       '</div>';
 
-    var infowindow = new google.maps.InfoWindow({
+    var infoWindow = new google.maps.InfoWindow({
       content: contentString,
     });
 
     marker.addListener('click', function () {
-      infowindow.open(mainMap, marker);
+      infoWindow.open(mainMap, marker);
     });
 
     markerPlaced = false;
