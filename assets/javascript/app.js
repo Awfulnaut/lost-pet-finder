@@ -78,6 +78,13 @@ $(document).ready(function () {
 
       //TODO: once youtube is implemented, add a check for its value here
       if (name != "" && email != "" && instrument != "" && experience != "" && youtube != "" && description != "") {
+        // Format the user input to prepare it for storage in Firebase
+        nameFormatted = name.charAt(0).toUpperCase() + name.substr(1);
+        instrumentFormatted = instrument.charAt(0).toUpperCase() + instrument.substr(1);
+        experienceFormatted = experience.charAt(0).toUpperCase() + experience.substr(1);
+        descriptionFormatted = description.charAt(0).toUpperCase() + description.substr(1);
+
+        // Mark the form as completed
         formCompleted = true;
       }
     }
@@ -87,19 +94,21 @@ $(document).ready(function () {
     // If an input marker has been placed AND the form is completed, add the data to firebase
     if (markerPlaced && formCompleted) {
 
+      // Create an object with all the relevant, formatted data
       var newMusician = {
-        name: name,
+        name: nameFormatted,
         email: email,
-        instrument: instrument,
-        experience: experience,
+        instrument: instrumentFormatted,
+        experience: experienceFormatted,
         youtube: youtube,
-        description: description,
+        description: descriptionFormatted,
         position: {
           lat: latInput,
           long: longInput
         }
       }
 
+      // Push the musician object to Firebase
       database.ref().push(newMusician);
     } else {
       $('#error').removeClass("d-none");
@@ -107,6 +116,8 @@ $(document).ready(function () {
   });
 
   database.ref().on("child_added", function (snapshot) {
+
+    // Grab all relevant data from Firebase
     var childData = snapshot.val();
     var positionLat = childData.position.lat;
     var positionLong = childData.position.long;
@@ -118,12 +129,14 @@ $(document).ready(function () {
     var musicianYT = childData.youtube;
     var musicianDescription = childData.description;
 
+    // Place a marker based on the object's position
     var marker = new google.maps.Marker({
       position: musicianPosition,
       map: mainMap,
       animation: google.maps.Animation.DROP,
     });
 
+    // Generate a DOM node to display the data
     var contentString =
       '<div class="info-window">' +
         '<p class="name">' + musicianName + '</p>' +
@@ -133,14 +146,17 @@ $(document).ready(function () {
         '<p><strong>Description: </strong><br />' + musicianDescription + '</p>' +
       '</div>';
 
+    // Generate an info window for the pin with the object's DOM node
     var infoWindow = new google.maps.InfoWindow({
       content: contentString,
     });
 
+    // When the marker is clicked, open the info window
     marker.addListener('click', function () {
       infoWindow.open(mainMap, marker);
     });
 
+    // Reset the marker placed flag
     markerPlaced = false;
   });
 });
