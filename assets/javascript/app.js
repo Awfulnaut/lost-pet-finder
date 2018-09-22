@@ -62,26 +62,29 @@ $(document).ready(function () {
     }
 
     var name;
-    var email;
-    var instrument;
-    var experience;
-    var youtube;
+    var phone;
+    var petName;
+    var petType;
+    var petAge;
+    var petImage;
     var description;
 
     function checkFormCompletion() {
       name = $('#name-input').val().trim();
-      email = $('#email-input').val().trim();
-      instrument = $('#instrument-input').val().trim();
-      experience = $('#experience-input').val().trim();
-      youtube = $('#youtube-input').val().trim();
+      phone = $('#phone-input').val().trim();
+      petName = $('#pet-name-input').val().trim();
+      petType = $('pet-type-input').val().trim()
+      petAge = $('#pet-age-input').val().trim();
+      petImage = $('#pet-image-input').val().trim();
       description = $('#description-input').val().trim();
 
-      //TODO: once youtube is implemented, add a check for its value here
-      if (name != "" && email != "" && instrument != "" && experience != "" && youtube != "" && description != "") {
+      
+      if (name != "" && phone != "" && petName != "" && petAge != "" && petImage != "" && description != "") {
         // Format the user input to prepare it for storage in Firebase
         nameFormatted = name.charAt(0).toUpperCase() + name.substr(1);
-        instrumentFormatted = instrument.charAt(0).toUpperCase() + instrument.substr(1);
-        experienceFormatted = experience.charAt(0).toUpperCase() + experience.substr(1);
+        petnameFormatted = petName.charAt(0).toUpperCase() + petName.substr(1);
+        pettypeFormatted = petType.charAt(0).toUpperCase() + petType.substr(1);
+        petageFormatted = petAge.charAt(0).toUpperCase() + petAge.substr(1);
         descriptionFormatted = description.charAt(0).toUpperCase() + description.substr(1);
 
         // Mark the form as completed
@@ -95,12 +98,12 @@ $(document).ready(function () {
     if (markerPlaced && formCompleted) {
 
       // Create an object with all the relevant, formatted data
-      var newMusician = {
+      var newPet = {
         name: nameFormatted,
-        email: email,
-        instrument: instrumentFormatted,
-        experience: experienceFormatted,
-        youtube: youtube,
+        phone: phone,
+        petName: petnameFormatted,
+        petAge: petageFormatted,
+        petImage: petImage,
         description: descriptionFormatted,
         position: {
           lat: latInput,
@@ -109,7 +112,7 @@ $(document).ready(function () {
       }
 
       // Push the musician object to Firebase
-      database.ref().push(newMusician);
+      database.ref().push(newPet);
     } else {
       $('#error').removeClass("d-none");
     }
@@ -121,17 +124,17 @@ $(document).ready(function () {
     var childData = snapshot.val();
     var positionLat = childData.position.lat;
     var positionLong = childData.position.long;
-    var musicianPosition = { lat: positionLat, lng: positionLong };
-    var musicianName = childData.name;
-    var musicianEmail = childData.email;
-    var musicianInstrument = childData.instrument;
-    var musicianExp = childData.experience;
-    var musicianYT = childData.youtube;
-    var musicianDescription = childData.description;
+    var petPosition = { lat: positionLat, lng: positionLong };
+    var ownerName = childData.name;
+    var ownerPhone = childData.phone;
+    var petName = childData.petName;
+    var petAge= childData.petAge;
+    var petImage = childData.petImage;
+    var petDescription = childData.description;
 
     // Place a marker based on the object's position
     var marker = new google.maps.Marker({
-      position: musicianPosition,
+      position: petPosition,
       map: mainMap,
       animation: google.maps.Animation.DROP,
     });
@@ -139,11 +142,14 @@ $(document).ready(function () {
     // Generate a DOM node to display the data
     var contentString =
       '<div class="info-window">' +
-        '<p class="name">' + musicianName + '</p>' +
-        '<p><strong>Email: </strong>' + musicianEmail + '</p>' +
-        '<p><strong>Instrument: </strong>' + musicianInstrument + '</p>' +
-        '<p><strong>Experience: </strong>' + musicianExp + ' years</p>' +
-        '<p><strong>Description: </strong><br />' + musicianDescription + '</p>' +
+        '<p class="name">' + ownerName + '</p>' +
+        '<p><strong>Phone Number: </strong>' + ownerPhone + '</p>' +
+        '<p><strong>Pets Name: </strong>' + petName + '</p>' +
+        '<p><strong>Pets Age: </strong>' + petAge + '</p>' +
+        '<p><strong>Pets Description: </strong><br />' + petDescription + '</p>' +
+        '<img src="' + petImage + '">' +
+      
+
       '</div>';
 
     // Generate an info window for the pin with the object's DOM node
