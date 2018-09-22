@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Musician Finder</title>
+    <title>Lost Pet Finder</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
@@ -17,11 +17,11 @@
 
     <div class="container mb-5">
         <div class="jumbotron">
-            <h1 class="display-4">Musician Finder</h1>
-            <p class="lead">A place to find and collaborate with available musicians.</p>
+            <h1 class="display-4">Lost Pet Finder</h1>
+            <p class="lead">Locate Lost Pets Nearby! Help find Brian.</p>
         </div>
 
-        <h3>Find Musicians in your area.</h3>
+        <h3>Here Are Nearby Animals.</h3>
 
         <div class="row">
             <div class="col-sm-12">
@@ -33,41 +33,44 @@
             </div>
         </div>
 
-
-        <div class="musician-form-wrapper p-4">
-            <h2 class="text-center mb-3">Put yourself on the map!</h2>
+        <div class="pet-form-wrapper p-4">
+            <h2 class="text-center mb-3">Where was your pet last seen:</h2>
             <div class="row">
                 <div class="col-md-6">
-                    <p class="text-center"><strong>Click the map to place a pin where you play</strong></p>
+                    <p class="text-center"><strong>Click the map to place a pin where your pet was last seen:</strong></p>
                     <div id="map-input">
                         Google Map input display
                     </div>
                     <p id="error" class="animated d-none">Please place a marker on the map</p>
                 </div>
                 <div class="col-md-6">
-                    <form class="musician-form">
+                    <form class="registrar-form">
                         <div class="form-group">
-                            <label for="name-input">Name</label>
+                            <label for="name-input">Your Name</label>
                             <input type="text" class="form-control" id="name-input" placeholder="Jane Doe" required />
                         </div>
                         <div class="form-group">
-                            <label for="email-input">Email Address</label>
-                            <input type="email" class="form-control" id="email-input" placeholder="name@example.com" required />
+                            <label for="phone-input">Your Phone Number</label>
+                            <input type="number" class="form-control" id="phone-input" placeholder="555-555-5555" required />
                         </div>
                         <div class="form-group">
-                            <label for="instrument-input">Instrument Played</label>
-                            <input type="text" class="form-control" id="instrument-input" placeholder="Guitar" required />
+                            <label for="pet-name-input">Pet Name</label>
+                            <input type="text" class="form-control" id="pet-name-input" placeholder="Brian" required />
                         </div>
                         <div class="form-group">
-                            <label for="experience-input">Years of Experience</label>
-                            <input type="number" class="form-control" id="experience-input" placeholder="5" required />
+                            <label for="pet-type-input">Pet Type</label>
+                            <input type="text" class="form-control" id="pet-type-input" placeholder="Golden Retriever" required />
                         </div>
                         <div class="form-group">
-                            <label for="youtube-input">Youtube Profile</label>
-                            <input type="text" class="form-control" id="youtube-input" placeholder="" required />
+                            <label for="pet-age-input">Pet Age</label>
+                            <input type="number" class="form-control" id="pet-age-input" placeholder="4" required />
                         </div>
                         <div class="form-group">
-                            <label for="description-input">Describe Yourself</label>
+                            <label for="pet-image-input">Link A Picture Of Your Pet</label>
+                            <input type="text" class="form-control" id="pet-image-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="description-input">Description</label>
                             <textarea class="form-control" id="description-input" required></textarea>
                         </div>
                         <input class="btn btn-primary" id="submit-btn" type="submit" value="Submit">
@@ -77,15 +80,9 @@
         </div>
     </div>
 
-
-
-
     <script src="https://www.gstatic.com/firebasejs/5.4.2/firebase.js"></script>
     <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
- 
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
     <script src="assets/javascript/app.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6GnZhTZ8RV_-JINWYAo0e2KDJQQoz7h0&callback=initMap">
     </script>

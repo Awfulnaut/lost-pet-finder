@@ -9,17 +9,17 @@
   height: 500px;
 }
 
-.musician-form-wrapper {
+.pet-form-wrapper {
   margin-top: 20px;
   background: #ccc;
   border: 2px solid #555;
 }
 
-.musician-form label{
+.registrar-form label{
   font-weight: bold;
 }
 
-.musician-form textarea {
+.registrar-form textarea {
   min-height: 100px;
 }
 
