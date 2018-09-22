@@ -126,7 +126,7 @@ $(document).ready(function () {
     var ownerName = childData.name;
     var ownerPhone = childData.phone;
     var petName = childData.petName;
-    var petAge= childData.petAge;
+    var petAge = childData.petAge;
     var petImage = childData.petImage;
     var petDescription = childData.description;
 
@@ -149,33 +149,33 @@ $(document).ready(function () {
     $.ajax({
       url: queryURL,
       method: "GET"
-    }).then(function(response) {
+    }).then(function (response) {
       maxTemp = response.main.temp_max;
       minTemp = response.main.temp_min;
       currentTemp = response.main.temp;
 
       // Set the weather message depending on the temperature
       if (maxTemp > 85) {
-        weatherMessage = "<span class=\"red\">Warning:</span> the max temperature in this area for today is " + 
-        Math.round(maxTemp) + "&#176;F.";
+        weatherMessage = "<span class=\"red\">Warning:</span> the max temperature in this area for today is " +
+          Math.round(maxTemp) + "&#176;F.";
       } else if (minTemp < 32) {
-        weatherMessage = "<span class=\"red\">Warning:</span> The low temperature in this area for today is " + 
-        Math.round(minTemp) + "&#176;F.";
+        weatherMessage = "<span class=\"red\">Warning:</span> The low temperature in this area for today is " +
+          Math.round(minTemp) + "&#176;F.";
       } else {
         weatherMessage = "The current temperature in this area is " + Math.round(currentTemp) + "&#176;F.";
       }
 
       // Generate a DOM node to display the data
       var contentString =
-      '<div class="info-window">' +
+        '<div class="info-window">' +
+        '<img src="' + petImage + '">' +
         '<p class="name">' + ownerName + '</p>' +
         '<p><strong>Phone Number: </strong>' + ownerPhone + '</p>' +
-        '<p><strong>Pets Name: </strong>' + petName + '</p>' +
-        '<p><strong>Pets Age: </strong>' + petAge + '</p>' +
-        '<p><strong>Pets Description: </strong><br />' + petDescription + '</p>' +
-        '<img src="' + petImage + '">' +
+        '<p><strong>Pet Name: </strong>' + petName + '</p>' +
+        '<p><strong>Pet Age: </strong>' + petAge + '</p>' +
+        '<p><strong>Description: </strong><br />' + petDescription + '</p>' +
         '<p>' + weatherMessage + '</p>' +
-      '</div>';
+        '</div>';
 
       // Generate an info window for the pin with the object's DOM node
       var infoWindow = new google.maps.InfoWindow({

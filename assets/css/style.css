@@ -28,6 +28,12 @@
   width: 400px;
 }
 
+.info-window img{
+  max-width: 150px;
+  max-height: 150px;
+  float: right;
+}
+
 .red {
   color: red;
 }
