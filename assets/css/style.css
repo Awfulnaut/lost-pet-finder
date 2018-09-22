@@ -1,31 +1,41 @@
 #main-map {
-  border: 3px solid blue;
+  border: 2px solid black;
   height: 500px;
 }
 
 #map-input {
-  border: 3px solid blue;
+  border: 2px solid black;
   background: #fff;
   height: 500px;
 }
 
-.musician-form-wrapper {
+.pet-form-wrapper {
   margin-top: 20px;
   background: #ccc;
   border: 2px solid #555;
 }
 
-.musician-form label{
+.registrar-form label{
   font-weight: bold;
 }
 
-.musician-form textarea {
+.registrar-form textarea {
   min-height: 100px;
 }
 
 .info-window{
   height: 100%;
-  width: 200px;
+  width: 400px;
+}
+
+.info-window img{
+  max-width: 150px;
+  max-height: 150px;
+  float: right;
+}
+
+.red {
+  color: red;
 }
 
 .name{
