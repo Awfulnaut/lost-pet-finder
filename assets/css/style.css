@@ -1,10 +1,10 @@
 #main-map {
-  border: 3px solid blue;
+  border: 2px solid black;
   height: 500px;
 }
 
 #map-input {
-  border: 3px solid blue;
+  border: 2px solid black;
   background: #fff;
   height: 500px;
 }
