@@ -28,6 +28,10 @@
   width: 200px;
 }
 
+.red {
+  color: red;
+}
+
 .name{
   font-weight: 400;
   font-size: 20px;

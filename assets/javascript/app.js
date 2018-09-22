@@ -38,7 +38,6 @@ function initMap() {
 
     latInput = newMarker.getPosition().lat();
     longInput = newMarker.getPosition().lng();
-    console.log("newMarker position: " + newMarker.getPosition())
   }
 
   // Listen for clicks on the input map that will place a marker
@@ -47,12 +46,10 @@ function initMap() {
 
     // Update markerPlaced boolean to validate against on submit
     markerPlaced = true;
-    console.log("markerPlaced = " + markerPlaced);
   });
 }
 
 $(document).ready(function () {
-  console.log("markerPlaced = " + markerPlaced);
 
   $("#submit-btn").on("click", function (event) {
 
@@ -128,6 +125,10 @@ $(document).ready(function () {
     var musicianExp = childData.experience;
     var musicianYT = childData.youtube;
     var musicianDescription = childData.description;
+    var maxTemp;
+    var minTemp;
+    var currentTemp;
+    var weatherMessage;
 
     // Place a marker based on the object's position
     var marker = new google.maps.Marker({
@@ -136,27 +137,48 @@ $(document).ready(function () {
       animation: google.maps.Animation.DROP,
     });
 
-    // Generate a DOM node to display the data
-    var contentString =
+    // Make the AJAX call to OpenWeather
+    var queryURL = "https://api.openweathermap.org/data/2.5/weather?appid=09eea35e73f9bec0e5e5fbc8981164b5&units=imperial" + "&lat=" + positionLat + "&lon=" + positionLong;
+
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    }).then(function(response) {
+      maxTemp = response.main.temp_max;
+      minTemp = response.main.temp_min;
+      currentTemp = response.main.temp;
+
+      // Set the weather message depending on the temperature
+      if (maxTemp > 85) {
+        weatherMessage = "<span class=\"red\">Warning:</span> the max temperature in this area for today is " + 
+        Math.round(maxTemp) + "&#8457;.";
+      } else if (minTemp < 32) {
+        weatherMessage = "<span class=\"red\">Warning:</span> The low temperature in this area for today is " + 
+        Math.round(minTemp) + "&#8457;.";
+      } else {
+        weatherMessage = "The current temperature in this area is " + Math.round(currentTemp) + "&#8457;.";
+      }
+
+      // Generate a DOM node to display the data
+      var contentString =
       '<div class="info-window">' +
         '<p class="name">' + musicianName + '</p>' +
         '<p><strong>Email: </strong>' + musicianEmail + '</p>' +
         '<p><strong>Instrument: </strong>' + musicianInstrument + '</p>' +
         '<p><strong>Experience: </strong>' + musicianExp + ' years</p>' +
-        '<p><strong>Description: </strong><br />' + musicianDescription + '</p>' +
+        '<p><strong>Description: </strong><br />' + musicianDescription + '</p><br />' +
+        '<p>' + weatherMessage + '</p>' +
       '</div>';
 
-    // Generate an info window for the pin with the object's DOM node
-    var infoWindow = new google.maps.InfoWindow({
-      content: contentString,
-    });
+      // Generate an info window for the pin with the object's DOM node
+      var infoWindow = new google.maps.InfoWindow({
+        content: contentString,
+      });
 
-    // When the marker is clicked, open the info window
-    marker.addListener('click', function () {
-      infoWindow.open(mainMap, marker);
+      // When the marker is clicked, open the info window
+      marker.addListener('click', function () {
+        infoWindow.open(mainMap, marker);
+      });
     });
-
-    // Reset the marker placed flag
-    markerPlaced = false;
   });
 });
