@@ -70,7 +70,7 @@ $(document).ready(function () {
       name = $('#name-input').val().trim();
       phone = $('#phone-input').val().trim();
       petName = $('#pet-name-input').val().trim();
-      petType = $('pet-type-input').val().trim()
+      petType = $('#pet-type-input').val().trim()
       petAge = $('#pet-age-input').val().trim();
       petImage = $('#pet-image-input').val().trim();
       description = $('#description-input').val().trim();
@@ -129,6 +129,8 @@ $(document).ready(function () {
     var petAge= childData.petAge;
     var petImage = childData.petImage;
     var petDescription = childData.description;
+
+    // Set weather variables
     var maxTemp;
     var minTemp;
     var currentTemp;
@@ -155,12 +157,12 @@ $(document).ready(function () {
       // Set the weather message depending on the temperature
       if (maxTemp > 85) {
         weatherMessage = "<span class=\"red\">Warning:</span> the max temperature in this area for today is " + 
-        Math.round(maxTemp) + "&#8457;.";
+        Math.round(maxTemp) + "&#176;F.";
       } else if (minTemp < 32) {
         weatherMessage = "<span class=\"red\">Warning:</span> The low temperature in this area for today is " + 
-        Math.round(minTemp) + "&#8457;.";
+        Math.round(minTemp) + "&#176;F.";
       } else {
-        weatherMessage = "The current temperature in this area is " + Math.round(currentTemp) + "&#8457;.";
+        weatherMessage = "The current temperature in this area is " + Math.round(currentTemp) + "&#176;F.";
       }
 
       // Generate a DOM node to display the data
