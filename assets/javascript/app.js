@@ -38,7 +38,6 @@ function initMap() {
 
     latInput = newMarker.getPosition().lat();
     longInput = newMarker.getPosition().lng();
-    console.log("newMarker position: " + newMarker.getPosition())
   }
 
   // Listen for clicks on the input map that will place a marker
@@ -47,12 +46,10 @@ function initMap() {
 
     // Update markerPlaced boolean to validate against on submit
     markerPlaced = true;
-    console.log("markerPlaced = " + markerPlaced);
   });
 }
 
 $(document).ready(function () {
-  console.log("markerPlaced = " + markerPlaced);
 
   $("#submit-btn").on("click", function (event) {
 
@@ -78,13 +75,13 @@ $(document).ready(function () {
       petImage = $('#pet-image-input').val().trim();
       description = $('#description-input').val().trim();
 
-      
-      if (name != "" && phone != "" && petName != "" && petAge != "" && petImage != "" && description != "") {
+      // If all input fields have been filled out...
+      if (name != "" && phone != "" && petName != "" && petType != "" && petAge != "" && petImage != "" && description != "") {
         // Format the user input to prepare it for storage in Firebase
         nameFormatted = name.charAt(0).toUpperCase() + name.substr(1);
-        petnameFormatted = petName.charAt(0).toUpperCase() + petName.substr(1);
-        pettypeFormatted = petType.charAt(0).toUpperCase() + petType.substr(1);
-        petageFormatted = petAge.charAt(0).toUpperCase() + petAge.substr(1);
+        petNameFormatted = petName.charAt(0).toUpperCase() + petName.substr(1);
+        petTypeFormatted = petType.charAt(0).toUpperCase() + petType.substr(1);
+        petAgeFormatted = petAge.charAt(0).toUpperCase() + petAge.substr(1);
         descriptionFormatted = description.charAt(0).toUpperCase() + description.substr(1);
 
         // Mark the form as completed
@@ -101,8 +98,9 @@ $(document).ready(function () {
       var newPet = {
         name: nameFormatted,
         phone: phone,
-        petName: petnameFormatted,
-        petAge: petageFormatted,
+        petName: petNameFormatted,
+        petType: petTypeFormatted,
+        petAge: petAgeFormatted,
         petImage: petImage,
         description: descriptionFormatted,
         position: {
@@ -131,6 +129,10 @@ $(document).ready(function () {
     var petAge= childData.petAge;
     var petImage = childData.petImage;
     var petDescription = childData.description;
+    var maxTemp;
+    var minTemp;
+    var currentTemp;
+    var weatherMessage;
 
     // Place a marker based on the object's position
     var marker = new google.maps.Marker({
@@ -139,8 +141,30 @@ $(document).ready(function () {
       animation: google.maps.Animation.DROP,
     });
 
-    // Generate a DOM node to display the data
-    var contentString =
+    // Make the AJAX call to OpenWeather
+    var queryURL = "https://api.openweathermap.org/data/2.5/weather?appid=09eea35e73f9bec0e5e5fbc8981164b5&units=imperial" + "&lat=" + positionLat + "&lon=" + positionLong;
+
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    }).then(function(response) {
+      maxTemp = response.main.temp_max;
+      minTemp = response.main.temp_min;
+      currentTemp = response.main.temp;
+
+      // Set the weather message depending on the temperature
+      if (maxTemp > 85) {
+        weatherMessage = "<span class=\"red\">Warning:</span> the max temperature in this area for today is " + 
+        Math.round(maxTemp) + "&#8457;.";
+      } else if (minTemp < 32) {
+        weatherMessage = "<span class=\"red\">Warning:</span> The low temperature in this area for today is " + 
+        Math.round(minTemp) + "&#8457;.";
+      } else {
+        weatherMessage = "The current temperature in this area is " + Math.round(currentTemp) + "&#8457;.";
+      }
+
+      // Generate a DOM node to display the data
+      var contentString =
       '<div class="info-window">' +
         '<p class="name">' + ownerName + '</p>' +
         '<p><strong>Phone Number: </strong>' + ownerPhone + '</p>' +
@@ -148,21 +172,18 @@ $(document).ready(function () {
         '<p><strong>Pets Age: </strong>' + petAge + '</p>' +
         '<p><strong>Pets Description: </strong><br />' + petDescription + '</p>' +
         '<img src="' + petImage + '">' +
-      
-
+        '<p>' + weatherMessage + '</p>' +
       '</div>';
 
-    // Generate an info window for the pin with the object's DOM node
-    var infoWindow = new google.maps.InfoWindow({
-      content: contentString,
-    });
+      // Generate an info window for the pin with the object's DOM node
+      var infoWindow = new google.maps.InfoWindow({
+        content: contentString,
+      });
 
-    // When the marker is clicked, open the info window
-    marker.addListener('click', function () {
-      infoWindow.open(mainMap, marker);
+      // When the marker is clicked, open the info window
+      marker.addListener('click', function () {
+        infoWindow.open(mainMap, marker);
+      });
     });
-
-    // Reset the marker placed flag
-    markerPlaced = false;
   });
 });
