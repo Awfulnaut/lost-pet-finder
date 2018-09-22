@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8" />
@@ -38,39 +38,40 @@
             <h2 class="text-center mb-3">Put yourself on the map!</h2>
             <div class="row">
                 <div class="col-md-6">
-                    <form class="musician-form">
-                        <div class="form-group">
-                            <label for="name-input">Name</label>
-                            <input type="text" class="form-control" id="name-input" placeholder="Jane Doe">
-                        </div>
-                        <div class="form-group">
-                            <label for="email-input">Email Address</label>
-                            <input type="email" class="form-control" id="email-input" placeholder="name@example.com">
-                        </div>
-                        <div class="form-group">
-                            <label for="instrument-input">Instrument Played</label>
-                            <input type="text" class="form-control" id="instrument-input" placeholder="Guitar">
-                        </div>
-                        <div class="form-group">
-                            <label for="experience-input">Years of Experience</label>
-                            <input type="number" class="form-control" id="experience-input" placeholder="5">
-                        </div>
-                        <div class="form-group">
-                            <label for="youtube-input">Youtube Profile</label>
-                            <input type="text" class="form-control" id="youtube-input" placeholder="">
-                        </div>
-                        <div class="form-group">
-                            <label for="description-input">Describe Yourself</label>
-                            <textarea class="form-control" id="description-input"></textarea>
-                        </div>
-                        <input class="btn btn-primary" id="submit-btn" type="submit" value="Submit">
-                    </form>
-                </div>
-                <div class="col-md-6">
                     <p class="text-center"><strong>Click the map to place a pin where you play</strong></p>
                     <div id="map-input">
                         Google Map input display
                     </div>
+                    <p id="error" class="animated d-none">Please place a marker on the map</p>
+                </div>
+                <div class="col-md-6">
+                    <form class="musician-form">
+                        <div class="form-group">
+                            <label for="name-input">Name</label>
+                            <input type="text" class="form-control" id="name-input" placeholder="Jane Doe" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="email-input">Email Address</label>
+                            <input type="email" class="form-control" id="email-input" placeholder="name@example.com" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="instrument-input">Instrument Played</label>
+                            <input type="text" class="form-control" id="instrument-input" placeholder="Guitar" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="experience-input">Years of Experience</label>
+                            <input type="number" class="form-control" id="experience-input" placeholder="5" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="youtube-input">Youtube Profile</label>
+                            <input type="text" class="form-control" id="youtube-input" placeholder="" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="description-input">Describe Yourself</label>
+                            <textarea class="form-control" id="description-input" required></textarea>
+                        </div>
+                        <input class="btn btn-primary" id="submit-btn" type="submit" value="Submit">
+                    </form>
                 </div>
             </div>
         </div>
