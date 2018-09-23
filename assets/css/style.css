@@ -15,7 +15,7 @@
   border: 2px solid #555;
 }
 
-.registrar-form label{
+.registrar-form label {
   font-weight: bold;
 }
 
@@ -23,24 +23,31 @@
   min-height: 100px;
 }
 
-.info-window{
+.info-window {
   height: 100%;
-  width: 400px;
+  width: 300px;
 }
 
-.info-window img{
-  max-width: 150px;
-  max-height: 150px;
+.info-window img {
+  max-width: 150px !important;
+  max-height: 150px !important;
   float: right;
+  margin-left: 12px;
+  margin-bottom: 12px;
+}
+
+.info-window hr {
+  clear: both;
 }
 
 .red {
   color: red;
 }
 
-.name{
+.name {
   font-weight: 400;
   font-size: 20px;
+  text-align: center;
 }
 
 .animated {

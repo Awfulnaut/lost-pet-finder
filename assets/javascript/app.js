@@ -168,13 +168,12 @@ $(document).ready(function () {
       // Generate a DOM node to display the data
       var contentString =
         '<div class="info-window">' +
-        '<img src="' + petImage + '">' +
-        '<p class="name">' + ownerName + '</p>' +
-        '<p><strong>Phone Number: </strong>' + ownerPhone + '</p>' +
-        '<p><strong>Pet Name: </strong>' + petName + '</p>' +
-        '<p><strong>Pet Age: </strong>' + petAge + '</p>' +
-        '<p><strong>Description: </strong><br />' + petDescription + '</p>' +
-        '<p>' + weatherMessage + '</p>' +
+          '<p class="name">' + petName + ', age ' + petAge +'</p>' +
+          '<img src="' + petImage + '">' +
+          '<p><strong>Description: </strong><br />' + petDescription + '</p>' +
+          '<p><strong>Contact: </strong><br />' + 'If found, please contact <strong>' + ownerName + '</strong> at <a href=\"tel:' + ownerPhone + '">' + ownerPhone + '</a></p>' +
+          '<hr>' +
+          '<p class="text-center">' + weatherMessage + '</p>' +
         '</div>';
 
       // Generate an info window for the pin with the object's DOM node
