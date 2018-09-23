@@ -171,7 +171,7 @@ $(document).ready(function () {
           '<p class="name">' + petName + ', age ' + petAge +'</p>' +
           '<img src="' + petImage + '">' +
           '<p><strong>Description: </strong><br />' + petDescription + '</p>' +
-          '<p><strong>Contact: </strong><br />' + 'If found, please contact <strong>' + ownerName + '</strong> at <a href=\"tel:' + ownerPhone + '">' + ownerPhone + '</a></p>' +
+          '<p><strong>Contact: </strong><br />' + 'If found, please contact <strong>' + ownerName + '</strong> at <a href=\"tel:' + ownerPhone + '">' + ownerPhone + '</a>.</p>' +
           '<hr>' +
           '<p class="text-center">' + weatherMessage + '</p>' +
         '</div>';

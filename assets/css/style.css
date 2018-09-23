@@ -40,6 +40,10 @@
   clear: both;
 }
 
+.info-window p:last-of-type {
+  margin-bottom: 0;
+}
+
 .red {
   color: red;
 }
