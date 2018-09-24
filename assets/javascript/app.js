@@ -128,6 +128,7 @@ $(document).ready(function () {
     var petName = childData.petName;
     var petAge = childData.petAge;
     var petImage = childData.petImage;
+    var petType = childData.petType;
     var petDescription = childData.description;
 
     // Set weather variables
@@ -170,6 +171,7 @@ $(document).ready(function () {
         '<div class="info-window">' +
           '<p class="name">' + petName + ', age ' + petAge +'</p>' +
           '<img src="' + petImage + '">' +
+          '<p><strong>Pet Type: </strong><br />' + petType + '</p>' +
           '<p><strong>Description: </strong><br />' + petDescription + '</p>' +
           '<p><strong>Contact: </strong><br />' + 'If found, please contact <strong>' + ownerName + '</strong> at <a href=\"tel:' + ownerPhone + '">' + ownerPhone + '</a>.</p>' +
           '<hr>' +
