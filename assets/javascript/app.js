@@ -156,13 +156,13 @@ $(document).ready(function () {
 
       // Set the weather message depending on the temperature
       if (maxTemp > 85) {
-        weatherMessage = "<span class=\"red\">Warning:</span> the max temperature in this area for today is " +
-          Math.round(maxTemp) + "&#176;F.";
+        weatherMessage = "<span class=\"red\">Warning:</span> the max temperature in this area for today is <span class=\"red\">" +
+          Math.round(maxTemp) + "&#176;F</span>.";
       } else if (minTemp < 32) {
-        weatherMessage = "<span class=\"red\">Warning:</span> The low temperature in this area for today is " +
-          Math.round(minTemp) + "&#176;F.";
+        weatherMessage = "<span class=\"red\">Warning:</span> The low temperature in this area for today is <span class=\"blue\">" +
+          Math.round(minTemp) + "&#176;F</span>.";
       } else {
-        weatherMessage = "The current temperature in this area is " + Math.round(currentTemp) + "&#176;F.";
+        weatherMessage = "The current temperature in this area is <span class=\"green\">" + Math.round(currentTemp) + "&#176;F</span>.";
       }
 
       // Generate a DOM node to display the data
@@ -184,6 +184,11 @@ $(document).ready(function () {
       // When the marker is clicked, open the info window
       marker.addListener('click', function () {
         infoWindow.open(mainMap, marker);
+      });
+
+      // If an infoWindow is open and you click the map, close the previously opened infoWindow
+      google.maps.event.addListener(mainMap, 'click', function() {
+        infoWindow.close();
       });
     });
   });
