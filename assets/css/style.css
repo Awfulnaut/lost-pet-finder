@@ -1,3 +1,14 @@
+.jumbotron {
+  background-image: url(https://files.slack.com/files-pri/TBN8T3F0V-FCYRB1PV2/image.png);
+}
+
+html {
+  background-image: url(https://www.pennington.com/-/media/images/pennington-na/us/blog/seed/all-you-need-to-know-about-zoysia-grass/zoysia-header.jpg);
+
+}
+body {
+  background-color: rgba(0,0,0, 0.5);
+}
 #main-map {
   border: 3px solid blue;
   height: 500px;
