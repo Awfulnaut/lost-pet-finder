@@ -10,12 +10,12 @@ body {
   background-color: rgba(0,0,0, 0.5);
 }
 #main-map {
-  border: 3px solid blue;
+  border: 2px solid black;
   height: 500px;
 }
 
 #map-input {
-  border: 3px solid blue;
+  border: 2px solid black;
   background: #fff;
   height: 500px;
 }
@@ -26,7 +26,7 @@ body {
   border: 2px solid #555;
 }
 
-.registrar-form label{
+.registrar-form label {
   font-weight: bold;
 }
 
@@ -34,14 +34,46 @@ body {
   min-height: 100px;
 }
 
-.info-window{
+.info-window {
   height: 100%;
-  width: 200px;
+  width: 300px;
 }
 
-.name{
+.info-window img {
+  max-width: 150px !important;
+  max-height: 150px !important;
+  float: right;
+  margin-left: 12px;
+  margin-bottom: 12px;
+}
+
+.info-window hr {
+  clear: both;
+}
+
+.info-window p:last-of-type {
+  margin-bottom: 0;
+}
+
+.red {
+  color: red;
+  font-weight: bold;
+}
+
+.blue {
+  color: blue;
+  font-weight: bold;
+}
+
+.green {
+  color: green;
+  font-weight: bold;
+}
+
+.name {
   font-weight: 400;
   font-size: 20px;
+  text-align: center;
 }
 
 .animated {
