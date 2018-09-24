@@ -1,36 +1,57 @@
 #main-map {
-  border: 3px solid blue;
+  border: 2px solid black;
   height: 500px;
 }
 
 #map-input {
-  border: 3px solid blue;
+  border: 2px solid black;
   background: #fff;
   height: 500px;
 }
 
-.musician-form-wrapper {
+.pet-form-wrapper {
   margin-top: 20px;
   background: #ccc;
   border: 2px solid #555;
 }
 
-.musician-form label{
+.registrar-form label {
   font-weight: bold;
 }
 
-.musician-form textarea {
+.registrar-form textarea {
   min-height: 100px;
 }
 
-.info-window{
+.info-window {
   height: 100%;
-  width: 200px;
+  width: 300px;
 }
 
-.name{
+.info-window img {
+  max-width: 150px !important;
+  max-height: 150px !important;
+  float: right;
+  margin-left: 12px;
+  margin-bottom: 12px;
+}
+
+.info-window hr {
+  clear: both;
+}
+
+.info-window p:last-of-type {
+  margin-bottom: 0;
+}
+
+.red {
+  color: red;
+}
+
+.name {
   font-weight: 400;
   font-size: 20px;
+  text-align: center;
 }
 
 .animated {
