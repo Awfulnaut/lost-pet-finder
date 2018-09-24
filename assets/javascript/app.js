@@ -17,12 +17,26 @@ var markerPlaced = false;
 var formCompleted = false;
 
 function initMap() {
-  var philly = { lat: 39.953, lng: -75.165 };
+  var currentLocation = { lat: 39.953, lng: -75.165 };
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      currentLocation = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+    }, function () {
+      handleLocationError(true, infoWindow, map.getCenter());
+    });
+  } else {
+    
+    handleLocationError(false, infoWindow, map.getCenter());
+  }
 
   mainMap = new google.maps.Map(
-    document.getElementById('main-map'), { zoom: 13, center: philly });
+    document.getElementById('main-map'), { zoom: 13, center: currentLocation });
   var inputMap = new google.maps.Map(
-    document.getElementById('map-input'), { zoom: 14, center: philly });
+    document.getElementById('map-input'), { zoom: 14, center: currentLocation });
 
   var newMarker;
 
@@ -128,7 +142,6 @@ $(document).ready(function () {
     var petName = childData.petName;
     var petAge = childData.petAge;
     var petImage = childData.petImage;
-    var petType = childData.petType;
     var petDescription = childData.description;
 
     // Set weather variables
@@ -169,13 +182,12 @@ $(document).ready(function () {
       // Generate a DOM node to display the data
       var contentString =
         '<div class="info-window">' +
-          '<p class="name">' + petName + ', age ' + petAge +'</p>' +
-          '<img src="' + petImage + '">' +
-          '<p><strong>Pet Type: </strong><br />' + petType + '</p>' +
-          '<p><strong>Description: </strong><br />' + petDescription + '</p>' +
-          '<p><strong>Contact: </strong><br />' + 'If found, please contact <strong>' + ownerName + '</strong> at <a href=\"tel:' + ownerPhone + '">' + ownerPhone + '</a>.</p>' +
-          '<hr>' +
-          '<p class="text-center">' + weatherMessage + '</p>' +
+        '<p class="name">' + petName + ', age ' + petAge + '</p>' +
+        '<img src="' + petImage + '">' +
+        '<p><strong>Description: </strong><br />' + petDescription + '</p>' +
+        '<p><strong>Contact: </strong><br />' + 'If found, please contact <strong>' + ownerName + '</strong> at <a href=\"tel:' + ownerPhone + '">' + ownerPhone + '</a>.</p>' +
+        '<hr>' +
+        '<p class="text-center">' + weatherMessage + '</p>' +
         '</div>';
 
       // Generate an info window for the pin with the object's DOM node
@@ -189,7 +201,7 @@ $(document).ready(function () {
       });
 
       // If an infoWindow is open and you click the map, close the previously opened infoWindow
-      google.maps.event.addListener(mainMap, 'click', function() {
+      google.maps.event.addListener(mainMap, 'click', function () {
         infoWindow.close();
       });
     });
