@@ -13,6 +13,7 @@ database = firebase.database();
 var latInput = 0;
 var longInput = 0;
 var mainMap;
+var inputMap;
 var markerPlaced = false;
 var formCompleted = false;
 
@@ -25,18 +26,21 @@ function initMap() {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       };
+      mainMap.panTo(currentLocation);
+      inputMap.panTo(currentLocation);
     }, function () {
       handleLocationError(true, infoWindow, map.getCenter());
     });
   } else {
-    
+
     handleLocationError(false, infoWindow, map.getCenter());
   }
 
+
   mainMap = new google.maps.Map(
     document.getElementById('main-map'), { zoom: 13, center: currentLocation });
-  var inputMap = new google.maps.Map(
-    document.getElementById('map-input'), { zoom: 14, center: currentLocation });
+  inputMap = new google.maps.Map(
+    document.getElementById('map-input'), { zoom: 17, center: currentLocation });
 
   var newMarker;
 
