@@ -17,12 +17,26 @@ var markerPlaced = false;
 var formCompleted = false;
 
 function initMap() {
-  var philly = { lat: 39.953, lng: -75.165 };
+  var currentLocation = { lat: 39.953, lng: -75.165 };
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      currentLocation = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+    }, function () {
+      handleLocationError(true, infoWindow, map.getCenter());
+    });
+  } else {
+    
+    handleLocationError(false, infoWindow, map.getCenter());
+  }
 
   mainMap = new google.maps.Map(
-    document.getElementById('main-map'), { zoom: 13, center: philly });
+    document.getElementById('main-map'), { zoom: 13, center: currentLocation });
   var inputMap = new google.maps.Map(
-    document.getElementById('map-input'), { zoom: 14, center: philly });
+    document.getElementById('map-input'), { zoom: 14, center: currentLocation });
 
   var newMarker;
 
@@ -127,6 +141,7 @@ $(document).ready(function () {
     var ownerPhone = childData.phone;
     var petName = childData.petName;
     var petAge = childData.petAge;
+    var petType = childData.petType;
     var petImage = childData.petImage;
     var petDescription = childData.description;
 
@@ -156,24 +171,25 @@ $(document).ready(function () {
 
       // Set the weather message depending on the temperature
       if (maxTemp > 85) {
-        weatherMessage = "<span class=\"red\">Warning:</span> the max temperature in this area for today is " +
-          Math.round(maxTemp) + "&#176;F.";
+        weatherMessage = "<span class=\"red\">Warning:</span> the max temperature in this area for today is <span class=\"red\">" +
+          Math.round(maxTemp) + "&#176;F</span>.";
       } else if (minTemp < 32) {
-        weatherMessage = "<span class=\"red\">Warning:</span> The low temperature in this area for today is " +
-          Math.round(minTemp) + "&#176;F.";
+        weatherMessage = "<span class=\"red\">Warning:</span> The low temperature in this area for today is <span class=\"blue\">" +
+          Math.round(minTemp) + "&#176;F</span>.";
       } else {
-        weatherMessage = "The current temperature in this area is " + Math.round(currentTemp) + "&#176;F.";
+        weatherMessage = "The current temperature in this area is <span class=\"green\">" + Math.round(currentTemp) + "&#176;F</span>.";
       }
 
       // Generate a DOM node to display the data
       var contentString =
         '<div class="info-window">' +
-          '<p class="name">' + petName + ', age ' + petAge +'</p>' +
-          '<img src="' + petImage + '">' +
-          '<p><strong>Description: </strong><br />' + petDescription + '</p>' +
-          '<p><strong>Contact: </strong><br />' + 'If found, please contact <strong>' + ownerName + '</strong> at <a href=\"tel:' + ownerPhone + '">' + ownerPhone + '</a>.</p>' +
-          '<hr>' +
-          '<p class="text-center">' + weatherMessage + '</p>' +
+        '<p class="name">' + petName + ', age ' + petAge + '</p>' +
+        '<img src="' + petImage + '">' +
+        '<p><strong>Pet Type: </strong><br />' + petType + '</p>' +
+        '<p><strong>Description: </strong><br />' + petDescription + '</p>' +
+        '<p><strong>Contact: </strong><br />' + 'If found, please contact <strong>' + ownerName + '</strong> at <a href=\"tel:' + ownerPhone + '">' + ownerPhone + '</a>.</p>' +
+        '<hr>' +
+        '<p class="text-center">' + weatherMessage + '</p>' +
         '</div>';
 
       // Generate an info window for the pin with the object's DOM node
@@ -184,6 +200,11 @@ $(document).ready(function () {
       // When the marker is clicked, open the info window
       marker.addListener('click', function () {
         infoWindow.open(mainMap, marker);
+      });
+
+      // If an infoWindow is open and you click the map, close the previously opened infoWindow
+      google.maps.event.addListener(mainMap, 'click', function () {
+        infoWindow.close();
       });
     });
   });

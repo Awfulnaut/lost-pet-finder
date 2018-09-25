@@ -1,6 +1,29 @@
+.jumbotron {
+  height: auto;
+  padding: 6px;
+  text-align: center;
+  background: white;
+}
+
+.jumbotron h1, .jumbotron p{
+  font-weight: bold;
+}
+
+html {
+  background-image: url(https://www.pennington.com/-/media/images/pennington-na/us/blog/seed/all-you-need-to-know-about-zoysia-grass/zoysia-header.jpg);
+}
+
+body {
+  background-color: rgba(0,0,0, 0.5);
+  padding-top: 20px;
+  height: 100%;
+  width: 100%;
+}
+
 #main-map {
-  border: 2px solid black;
+  margin: 0px 20px 20px;
   height: 500px;
+  border: 2px solid black;
 }
 
 #map-input {
@@ -9,10 +32,16 @@
   height: 500px;
 }
 
+.pin-map {
+  margin-top: 20px;
+  background: white;
+  border-radius: .3rem;
+}
+
 .pet-form-wrapper {
   margin-top: 20px;
-  background: #ccc;
-  border: 2px solid #555;
+  background: white;
+  border-radius: .3rem;
 }
 
 .registrar-form label {
@@ -46,7 +75,19 @@
 
 .red {
   color: red;
+  font-weight: bold;
 }
+
+.blue {
+  color: blue;
+  font-weight: bold;
+}
+
+.green {
+  color: green;
+  font-weight: bold;
+}
+
 
 .name {
   font-weight: 400;
