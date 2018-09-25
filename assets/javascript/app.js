@@ -141,6 +141,7 @@ $(document).ready(function () {
     var ownerPhone = childData.phone;
     var petName = childData.petName;
     var petAge = childData.petAge;
+    var petType = childData.petType;
     var petImage = childData.petImage;
     var petDescription = childData.description;
 
@@ -184,6 +185,7 @@ $(document).ready(function () {
         '<div class="info-window">' +
         '<p class="name">' + petName + ', age ' + petAge + '</p>' +
         '<img src="' + petImage + '">' +
+        '<p><strong>Pet Type: </strong><br />' + petType + '</p>' +
         '<p><strong>Description: </strong><br />' + petDescription + '</p>' +
         '<p><strong>Contact: </strong><br />' + 'If found, please contact <strong>' + ownerName + '</strong> at <a href=\"tel:' + ownerPhone + '">' + ownerPhone + '</a>.</p>' +
         '<hr>' +
