@@ -16,17 +16,17 @@ We used two APIs—OpenWeatherMap and Google Maps—to create a dynamic web appl
 
 **GitHub Pages** - Our app was deployed using Github Pages (visible [here](https://awfulnaut.github.io/lost-pet-finder/ "Lost Pet Finder"))
 
-##Leveraging Google Maps
+## Leveraging Google Maps
 - Both maps are initialized and automatically detect and pan to your current location
 - The main map drops pins with information on all previously submitted lost pets
 - The form validates inputs, including the detection of a dropped pin, in order to submit
 - Data is passed to Firebase and then pulled into the main map
 
-##Google Maps + Open Weather Map AJAX Calls
+## Google Maps + Open Weather Map AJAX Calls
 - Latitude and longitude data is provided by the user through Google Maps, and then passed through the Open Weather Map API to obtain location specific weather data
 - Once the data is obtained, we display the temperature in the info window of that pin, along with a warning if the pet is in extreme conditions
 
-##Future Ideas
+## Future Ideas
 - Faster pet location by utilizing a sidebar to displays the first ~5 images from each visible pins on the map, which would link directly to the associated pin
 - Create user accounts so that people who post a lost pet can edit and remove their listings
 - A feed that displays the most recent lost pets
