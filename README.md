@@ -8,7 +8,7 @@ We used two APIs—OpenWeatherMap and Google Maps—to create a dynamic web appl
 
 **Open Weather Map API** - Allows the user to know dangerous conditions that their pet is in based on the location’s weather data.
 
-**Bootstrap 4** - We used Bootstrap to quickly stand up a responsive site displaying a main map with user submitted pins and a form with an input map.
+**Bootstrap 4** - Bootstrap was used to quickly stand up a responsive site displaying a main map with user submitted pins and a form with an input map.
 
 **JQuery** - JQuery was used to handle click events, dynamic behavior, and form value collection.
 
@@ -34,4 +34,4 @@ We used two APIs—OpenWeatherMap and Google Maps—to create a dynamic web appl
 
 ---
 
-For more information, contact Cadin McQueen at cadin.mcqueen@gmail.com.
+This application was created by Cadin McQueen, Jason Tashman, Michelle Turner, and Don Feeney. For more information, email cadin.mcqueen@gmail.com.
