@@ -1,12 +1,3 @@
-var config = {
-  apiKey: "AIzaSyDDqeSFBecW0z7ho68WE5ZwcTusl6hVits",
-  authDomain: "musician-finder-f0e28.firebaseapp.com",
-  databaseURL: "https://musician-finder-f0e28.firebaseio.com",
-  projectId: "musician-finder-f0e28",
-  storageBucket: "",
-  messagingSenderId: "495490109784"
-};
-
 firebase.initializeApp(config);
 database = firebase.database();
 
