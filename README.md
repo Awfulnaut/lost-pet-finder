@@ -1,4 +1,7 @@
 # Lost Pet Finder
+
+![screenshot of pet finder app](assets/images/screenshot.png)
+
 The [Lost Pet Finder](https://awfulnaut.github.io/lost-pet-finder/ "Lost Pet Finder") caters to pet owners who have lost their pets.  Individuals that find an abandoned pet can go to the site and submit their pet’s last known location by placing a pin on the map. Owners post in hopes that others will reach out with good news.
 
 We used two APIs—OpenWeatherMap and Google Maps—to create a dynamic web application. We leveraged Google Maps to display pins with info windows containing the user submitted information, along with the weather information pulled from OpenWeatherMap based on that location.
